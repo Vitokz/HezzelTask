@@ -15,6 +15,7 @@ type Handler struct {
 	Ch    *clickhouse.ClickHouse
 	Kafka Kafka
 	Db    Db
+	Redis
 }
 
 type Db interface {
@@ -25,6 +26,10 @@ type Db interface {
 
 type Kafka interface {
 	WriteMessage(key []byte, value []byte) error
+}
+
+type Redis interface {
+	AddUsers(users *[]models.User) error
 }
 
 func (h *Handler) AddUser(ctx context.Context, name, email, phone string) error {
@@ -67,6 +72,10 @@ func (h *Handler) UserList(ctx context.Context) (*[]models.User, error) {
 	if err != nil {
 		return nil, errors.Wrap(err, "Failed to take user list: ")
 	}
-	//Добавить редиску
+
+	err = h.Redis.AddUsers(users)
+	if err != nil {
+		return nil, errors.Wrap(err, "Failed to add users in redis: ")
+	}
 	return users, nil
 }

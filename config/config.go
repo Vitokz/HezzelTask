@@ -6,6 +6,7 @@ type Config struct {
 	Pg Pg
 	Clickhouse Clickhouse
 	Kafka Kafka
+	Redis Redis
 }
 
 type Pg struct {
@@ -25,6 +26,11 @@ type Kafka struct {
 	Topic string
 }
 
+type Redis struct {
+	Host string
+	Port string
+}
+
 func Get() *Config{
 	migPath, _ := os.LookupEnv("PG_MIGRATIONS_PATH")
 	return &Config{
@@ -41,6 +47,10 @@ func Get() *Config{
 			Host: "kafka",
 			Port: "9092",
 			Topic: "addUserLogs",
+		},
+		Redis: Redis{
+			Port: "6379",
+			Host: "redis",
 		},
 	}
 }

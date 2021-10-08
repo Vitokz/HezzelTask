@@ -6,6 +6,7 @@ import (
 	"HezzelTask/handler"
 	"HezzelTask/kafka"
 	"HezzelTask/proto"
+	"HezzelTask/redis"
 	"HezzelTask/repository"
 	"google.golang.org/grpc"
 	"log"
@@ -44,10 +45,16 @@ func main() {
 	}
 	defer ch.Close()
 
+	//Создаю соединение с Redis
+	rdb,err := redis.Connect(cfg)
+	if err != nil {
+		panic(err)
+	}
 	hdlr := &handler.Handler{
 		Db:    &repository.Pg{Db: db},
 		Ch:    &clickhouse.ClickHouse{Ch: ch},
 		Kafka: &kafka.Kafka{Kf: kf, Writer: wr},
+		Redis: &redis.Redis{Redis: rdb},
 	}
 
 	s := grpc.NewServer()
