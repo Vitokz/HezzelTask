@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS  users (
+    id SERIAL PRIMARY KEY NOT NULL,
+    name text NOT NULL DEFAULT 'angelo',
+    email text NOT NULL DEFAULT 'tony@mail.ru' UNIQUE,
+    phone text NOT NULL DEFAULT '+79299239293',
+    created_at timestamp WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP NOT NULL
+);

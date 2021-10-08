@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package proto;
+
+option go_package = "github.com/Vitokz/HezzelTask/proto";
+
+service HezzelUsers {
+  rpc AddUser(AddUserRequesst) returns (AddUserResponse);
+  rpc DeleteUSer(DeleteUserRequest) returns (DeleteUserResponse);
+  rpc UserList(UserListRequest) returns (UserListResponse);
+}
+
+message User {
+  string name = 1;
+  string email = 2;
+  string phone = 3;
+}
+
+message AddUserRequesst {
+  User user = 1;
+}
+
+message AddUserResponse {
+    User user = 1;
+}
+
+message DeleteUserRequest {
+  string email = 1;
+}
+
+message DeleteUserResponse {
+}
+
+message UserListRequest {
+}
+
+message UserListResponse {
+    repeated User users = 1;
+}
