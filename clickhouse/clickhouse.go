@@ -24,9 +24,9 @@ func Connect(cfg *config.Config) (*sql.DB, error) {
 	if err := connect.Ping(); err != nil {
 		return nil, err
 	}
-	_, err = connect.Exec(`
-		DROP TABLE IF EXISTS my_logs
-		`)
+	//_, err = connect.Exec(`
+	//	DROP TABLE IF EXISTS my_logs
+	//	`)
 	_, err = connect.Exec(`
 		CREATE TABLE IF NOT EXISTS my_logs (
 		    log_text    String,
